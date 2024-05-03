@@ -6,6 +6,10 @@ import { MdAdd } from 'react-icons/md'
 import AddEditNotes from './AddEditNotes'
 import Modal from 'react-modal'
 import axiosInstance from '../../utils/axiosinstval';
+import Toast from '../../components/ToastMessage/Toast';
+import EmptyCard from '../../components/EmptyCard/EmptyCard';
+import AddNotesImg from '../../assets/images/add-notes.svg';
+import NoDataImg from '../../assets/images/no-data.svg';
 
 const Home = () => {
 
@@ -15,14 +19,37 @@ const Home = () => {
     data:null,
   });
 
+  const[showToastMsg, setShowToastMsg] = useState({
+    isShown:false,
+    message:'',
+    type:'add'
+  });
+
   const [allNotes, setAllNotes] = useState([]);
   const [userInfo, setUserInfo] = useState(null);
+
+  const [isSearch, setIsSearch] = useState(false);
 
   const navigate = useNavigate();
 
   const handleEdit = (noteDetails) => {
     setOpenAddEditModal({ isShown:true, data:noteDetails, type:'edit'});
   };
+
+  const showToastMessage = (message, type) => {
+    setShowToastMsg({
+      isShown:true,
+      message,
+      type,
+    });
+  };
+
+  const handleCloseToast = () => {
+    setShowToastMsg({
+      isShown:false,
+      message:'',
+    });
+  }
 
   //Get User Info
   const getUserInfo = async () => {
@@ -54,6 +81,62 @@ const Home = () => {
       }
     };
 
+    //Delete Note
+    const deleteNote = async (data) => {
+      const noteId = data._id;
+      try {
+        const response = await axiosInstance.delete("/delete-note/" + noteId);
+
+        if (response.data && !response.data.error) {
+            showToastMessage('Note Deleted Successfully', 'delete');
+            getAllNotes();
+        }
+    } catch (error) {
+        if (error.response && error.response.data && error.response.data.message) {
+          console.log("An unexpected error occurred:");
+        }
+    }
+
+    };
+
+    //Seach for a note
+    const onSearchNote = async (query) => {
+      try{
+        const response = await axiosInstance.get("/search-notes", {
+          params:{query},
+        })
+
+        if(response.data && response.data.notes){
+          setIsSearch(true);
+          setAllNotes(response.data.notes);
+        }
+      } catch(error){
+        console.log(error);
+      }
+    };
+
+    //Update pinned status of a note
+    const updateIsPinned = async (noteData) => {
+      const noteId = noteData._id;
+        try {
+            const response = await axiosInstance.put("/update-note-pinned/" + noteId , {
+                "isPinned" : !noteData.isPinned,
+            });
+
+            if (response.data && response.data.note) {
+                showToastMessage('Note Updated Successfully')
+                getAllNotes();
+            }
+        } catch (error) {
+          console.log(error);   
+        }
+    }
+
+    const handleClearSearch = () =>
+       {
+      setIsSearch(false);
+      getAllNotes();
+    };
 
     useEffect(() => {
       getAllNotes();
@@ -65,9 +148,10 @@ const Home = () => {
 
   return (
   <>
-    <Navbar userInfo={userInfo} />
+    <Navbar userInfo={userInfo} onSearchNote={onSearchNote} handleClearSearch={handleClearSearch} />
 
     <div className="p-4 container mx-auto">
+      {allNotes.length > 0 ? (
       <div className="grid grid-cols-3 gap-4 mt-8 ">
         {allNotes.map((item,index) => (
            <NoteCard 
@@ -78,11 +162,15 @@ const Home = () => {
            tags={item.tags}
            isPinned={item.isPinned}
            onEdit={()=>handleEdit(item)}
-           onDelete={()=>{}}
-           onPinNote={()=>{}}
+           onDelete={()=>deleteNote(item)}
+           onPinNote={()=>updateIsPinned(item)}
            />
         ))}
-      </div>
+      </div> 
+      ):( 
+      <EmptyCard imgsrc={isSearch ? NoDataImg : AddNotesImg} 
+      message={isSearch ? `Oops!..No notes found matching your search...`
+      : `Start creating note by clicking the 'Add' button!..Jot down your thoughts, remainders and your ideas now!..Let's Get Started!!`} />)}
     </div>
 
     <button 
@@ -124,8 +212,16 @@ const Home = () => {
       })
     }}
     getAllNotes={getAllNotes}
+    showToastMessage={showToastMessage}
     />
     </Modal>
+
+    <Toast
+      isShown={showToastMsg.isShown}
+      message={showToastMsg.message}
+      type={showToastMsg.type}
+      onClose={handleCloseToast}
+      />
   </>
   )
 }

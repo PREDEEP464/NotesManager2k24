@@ -33,4 +33,13 @@
   .input-label{
     @apply text-xs text-slate-400;
   }
+
+  html, body, #root {
+  height: 100%;
+}
+
+.app-container {
+  min-height: 100%;
+  background-color: rgb(230, 230, 230)
+}
 }
