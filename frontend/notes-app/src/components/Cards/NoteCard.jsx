@@ -32,7 +32,7 @@ const NoteCard = ({
         <div className="text-xs text-slate-500">{tags.map((item)=> `#${item}    `)}</div>
 
         <div className="flex items-center gap-2">
-          <MdCreate className="icon-btn hover:text-green-600" onClick={onEdit} />
+          <MdCreate className="icon-btn hover:text-blue-800" onClick={onEdit} />
           <MdDelete className="icon-btn hover:text-red-600" onClick={onDelete} />
         </div>
       </div>
