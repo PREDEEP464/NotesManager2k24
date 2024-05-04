@@ -27,7 +27,8 @@ const Navbar = ({ userInfo, onSearchNote, handleClearSearch }) => {
 
   return (
     <div className="bg-gray-100 flex items-center justify-between px-6 py-2 drop-shadow">
-        <h2 className="text-3xl font-medium text-black py-4">Notes</h2>
+        <h2 className="text-3xl font-medium text text-orange-600 py-4">Notes  
+        <span className='text-3xl font-medium text-blue-700 py-4'>Nest</span></h2>
 
         <SearchBar  value={searchQuery}
         onChange={({target}) => {

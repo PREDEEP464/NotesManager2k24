@@ -51,7 +51,8 @@ const Login = () => {
   return (
     <div className="flex flex-col items-center justify-center bg-gray-200">
       <div className = 'mt-28'></div>
-      <h1 className="text-4xl mb-6 font-bold text-gray-800">📋 Notes Manager 📋</h1>
+      <h1 className="text-4xl mb-6 font-bold text-orange-600">📋 Notes 
+      <span className='text-4xl mb-6 font-bold text-blue-700'>Nest 📋</span> </h1>
       <div className="w-96 border rounded bg-white px-7 py-10">
         <form onSubmit={handleLogin}>
           <h2 className="text-2xl mb-7">Login</h2>
@@ -87,7 +88,7 @@ const Login = () => {
         </form>
       </div>
       <footer className="text-xs text-center mt-24">
-        © NotesManager2k24 • All rights reserved
+        © NotesNest2k24 • All rights reserved
       </footer>
     </div>
   );
