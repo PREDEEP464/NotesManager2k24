@@ -65,7 +65,7 @@ const SignUp = () => {
       <div className = 'mt-28'></div>
       <h1 className="text-4xl mb-6 font-bold text-orange-600">📋 Notes 
       <span className='text-4xl mb-6 font-bold text-blue-700'>Nest 📋</span> </h1>
-      <div className="w-96 border rounded bg-white px-7 py-10">
+      <div className="w-96 border shadow-xl rounded-lg bg-white px-7 py-10">
         <form onSubmit={handleSignUp}>
           <h2 className="text-2xl mb-7">Sign Up</h2>
 
