@@ -50,13 +50,13 @@ const Login = () => {
 
   return (
     <div className="flex flex-col items-center justify-center bg-gray-200">
-      <div className = 'mt-28'></div>
+      <div className = 'mt-20'></div>
       <h1 className="text-4xl mb-6 font-bold text-orange-600">📋 Notes 
       <span className='text-4xl mb-6 font-bold text-blue-700'>Nest 📋</span> </h1>
       <div className="w-96 border shadow-xl rounded-lg bg-white px-7 py-10">
         <form onSubmit={handleLogin}>
-          <h2 className="text-2xl mb-7">Login</h2>
-
+          <h2 className="text-2xl font-bold mb-7">Login</h2>
+          <h6 className="text-md ml-1 mb-2">Email</h6>
           <input
             type="text"
             placeholder="Email"
@@ -64,7 +64,7 @@ const Login = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
-
+          <h6 className="text-md ml-1 mb-2">Password</h6>
           <PasswordInput
             value={password}
             onchange={(e) => setPassword(e.target.value)}
@@ -77,7 +77,7 @@ const Login = () => {
           </button>
 
           <p className='text-sm text-center mt-4'>
-            Not registered yet?{" "}
+            Don't have an account?{" "}
             <Link
               to="/signup"
               className="text-primary font-semibold hover:text-blue-700 hover:underline"
@@ -87,7 +87,7 @@ const Login = () => {
           </p>
         </form>
       </div>
-      <footer className="text-xs text-center mt-24">
+      <footer className="text-xs text-center mt-20">
         © NotesNest2k24 • All rights reserved
       </footer>
     </div>
