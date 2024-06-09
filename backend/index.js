@@ -18,11 +18,13 @@ const { authenticateToken } = require("./utlilites");
 
 app.use(express.json());
 
-app.use(
-    cors({
-        origin: '*',
-    })
-)
+app.use(cors(
+    {
+        origin: ["https://notes-manager2k24.vercel.app"],
+        methods: ["POST", "GET"],
+        credentials: true
+    }
+));
 
 app.get('/', (req, res) => {
     res.json({data:"Hello"});
