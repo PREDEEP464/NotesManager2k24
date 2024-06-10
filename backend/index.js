@@ -20,7 +20,7 @@ app.use(express.json());
 
 app.use(cors(
     {
-        origin: ["https://notes-manager2k24.vercel.app"],
+        origin: ["https://notes-manager2k24.vercel.app","https://notesmanager2k24-api.onrender.com"],
         methods: ["POST", "GET","PUT","DELETE"],
         credentials: true
     }
